@@ -160,7 +160,7 @@ void image_load(const char *path)
 	struct stat st;
 	void *data;
 
-	fd = open(path, O_RDWR);
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		die("Cannot open %s: %m", path);
 
@@ -173,7 +173,7 @@ void image_load(const char *path)
 	if (st.st_size < 8)
 		die("%s is too small (%zu bytes)", path, st.st_size);
 
-	data = mmap(NULL, st.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+	data = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 	if (data == MAP_FAILED)
 		die("Cannot mmap %s: %m", path);
 
